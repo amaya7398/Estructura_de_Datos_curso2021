@@ -8,27 +8,22 @@ public class DoublyLinkedTest {
 * Busqueda y eliinar nodo dado             
 * Actualizar un nodo
          */
-    DoublyLinkedList<Integer> theList = new DoublyLinkedList<>();
+    DoublyLinkedList theList = new DoublyLinkedList();
     theList.insertFirst(22); 
     theList.insertFirst(44);
     theList.insertFirst(66);
     theList.insertLast(11); 
     theList.insertLast(33);
     theList.insertLast(55);
-         theList.displayForward(); 
+            theList.displayForward(); 
     theList.updateData(22, 22);
-         theList.displayBackward(); 
+            theList.displayBackward(); 
     theList.deleteFirst(); 
     theList.deleteLast(); 
-                 theList.deleteKey(11); 
-         theList.displayForward(); 
-                 theList.deleteAfter(33);
-                 theList.deleteBefore(44);
-         theList.displayForward();
-                 theList.insertBefore(44, 55); 
-                 theList.insertAfter(33, 22);
-         theList.displayForward(); 
-                 theList.updateData(22, 00);
-         theList.displayForward(); 
+    theList.deleteKey(11); 
+            theList.displayForward(); 
+    theList.insertAfter(22, 77); 
+    theList.insertAfter(33, 88); 
+            theList.displayForward(); 
     } 
 }

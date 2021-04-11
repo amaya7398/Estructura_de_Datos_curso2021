@@ -1,7 +1,7 @@
 
-class DELinkList {
-    private DELink first;
-    private DELink last; 
+class DELinkList <E>{
+    private DELink <E> first;
+    private DELink <E> last; 
     
     public DELinkList() {
         first = null;
@@ -12,7 +12,7 @@ class DELinkList {
         if(first==null) System.out.println("Vacía, lista vacía");
         return (first==null);
     }
-    public DELink first(){
+    public DELink <E> first(){
         if (isEmpty()){
             System.out.println("No hay link alguno");
         } else {
@@ -22,7 +22,7 @@ class DELinkList {
         return first;
     }
 
-    public DELink last(){
+    public DELink <E> last(){
         if (isEmpty()){
             System.out.println("No hay link alguno");
         } else {
@@ -32,16 +32,16 @@ class DELinkList {
         return last;
     }
 
-    public void insertFirst(double dd) { 
-        DELink newLink = new DELink(dd);
+    public void insertFirst(E dd) { 
+        DELink<E> newLink = new DELink<> (dd);
         if(isEmpty())
             last = newLink;
         newLink.next = first; 
         first = newLink;
     }
 
-    public void insertLast(double dd) { 
-        DELink newLink = new DELink(dd);
+    public void insertLast(E dd) { 
+        DELink<E> newLink = new DELink<> (dd);
         if(isEmpty())
             first = newLink;
         else
@@ -49,11 +49,11 @@ class DELinkList {
         last = newLink;
     }
 
-    public void insertAfterData(double afterIt, double dd ){        
+    public void insertAfterData(E afterIt, E dd ){        
         if (!isEmpty()){
-            DELink current = search(afterIt);
+            DELink<E> current = search(afterIt);
             if(current.next != null ){ //Si la base NO es el ultimo nodo
-                DELink newNodo = new DELink(dd);
+                DELink<E> newNodo = new DELink<E> (dd);
                 newNodo.next = current.next;
                 current.next = newNodo;
             }
@@ -61,9 +61,9 @@ class DELinkList {
         }
     }
 
-    public void insertBeforeData(double beforeIt, double dd){
+    public void insertBeforeData(E beforeIt, E dd){
         if (!isEmpty()){
-            DELink current = search(beforeIt);
+            DELink<E> current = search(beforeIt);
 
             if(current == first){
                 insertFirst(dd); //La base es el primer nodo    
@@ -78,8 +78,8 @@ class DELinkList {
     }
 
 
-    public Double deleteFirst() {
-        Double temp = first.dData;
+    public E deleteFirst() {
+        E temp = first.dData;
         if(first.next == null){
             last = null;
         }
@@ -87,9 +87,9 @@ class DELinkList {
         return temp;    
     }
 
-    public Double deleteLast(){
-        Double temp = last.dData;
-        DELink current = first;
+    public E deleteLast(){
+        E temp = last.dData;
+        DELink<E> current = first;
         if(first.next == null){
             first = null;
         }
@@ -101,29 +101,28 @@ class DELinkList {
         return temp;  
     }
 
-    public Double deleteWUT(double data){ //Double porque necesito NULL
-        Double temp = null;
+    public E deleteWUT(E data){ //Double porque necesito NULL
+        E temp = null;
         if(first.dData == data) temp = deleteFirst();
         if(last.dData == data) temp = deleteLast();
         return temp;
     }
 
-    public Double deleteData(double data){
-        Double temp = deleteWUT(data); //Si es NULL->no ha sido removido
+    public E deleteData(E data){
+        E temp = deleteWUT(data); //Si es NULL->no ha sido removido
         if (!isEmpty() && temp == null){ //Ni del inicio ni del final
-                DELink current = searchMinus1(data);
+                DELink<E> current = searchMinus1(data);
                 temp = deleteAfterData(current.dData);
         }
         return temp;
     }
 
-    public Double deleteAfterData(double data){
-        DELink current = search(data);
-        Double temp = null;
+    public E deleteAfterData(E data){
+        DELink<E> current = search(data);
+        E temp = null;
 
         if(current.next == null) System.out.println("No hay nada después del final");
         if(current.next != null) temp = deleteWUT(current.next.dData);
-    
         if (!isEmpty() && temp == null && current.next != null){
             temp = current.next.dData;
             current.next = current.next.next;
@@ -131,33 +130,31 @@ class DELinkList {
         return temp;
     }
 
-
-    public DELink search(double dData){
-        DELink current = first;
+    public DELink<E> search(E dData){
+        DELink<E> current = first;
         while( current != null && current.dData != dData) {
             current = current.next; 
         }
         return current;
     }
 
-    public DELink searchMinus1(double dData){
-        DELink current = null;
+    public DELink<E> searchMinus1(E dData){
+        DELink<E> current = null;
         if(!isEmpty() && first.dData != dData && first.next != null){
             current = first;
             while(current.next != null){
                 if(current.next.dData == dData) break;
                 current = current.next;
-                if(current.next == null) current = null; 
             }
         }
         return current;
     }
 
-    public void updateData(Double data, Double newData){
+    public void updateData(E data, E newData){
         
-        DELink current = search(data);
+        DELink<E> current = search(data);
         if(current != null){
-            current.setData(newData);
+            current.dData = newData;
             System.out.println(data + " <=> "+newData+" new data");
         } else {
             System.out.println("Link no encontrado");
@@ -166,7 +163,7 @@ class DELinkList {
     public void displayList() {
         System.out.print("List (first--> ");
         //System.out.println(first+ "<--last)");    //Posible cambio
-        DELink current = first;
+        DELink<E> current = first;
         while( current != null) {
             current.displayLink(); 
             current = current.next; 

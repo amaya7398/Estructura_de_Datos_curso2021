@@ -1,9 +1,9 @@
-public class DoublyLink {
-    public long dData; 
-    public DoublyLink next; 
-    public DoublyLink previous; 
+public class DoublyLink<E> {
+    public E dData; 
+    public DoublyLink<E> next; 
+    public DoublyLink<E> previous; 
 
-    public DoublyLink(long d) { 
+    public DoublyLink(E d) { 
         dData = d; 
     }
 

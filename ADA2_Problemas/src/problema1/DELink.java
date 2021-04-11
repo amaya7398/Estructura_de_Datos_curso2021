@@ -1,14 +1,11 @@
-public class DELink {
-    public Double dData;
-    public DELink next; 
+public class DELink <E> {
+    public E dData;
+    public DELink <E> next; 
     
     public DELink(){ }
-    public DELink(double dd) {
+    public DELink(E dd) {
         dData = dd;
     }
-
-    public Double getData(){return dData;}
-    public void setData(Double data){this.dData = data;}
 
     public void displayLink() {
         System.out.print("{" + dData + "} ");   }

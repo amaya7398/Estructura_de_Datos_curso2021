@@ -1,28 +1,29 @@
-public class DoublyLinkedList<E> {
-    private DoublyLink<E> first; 
-    private DoublyLink<E> last; 
-    public String msgError = "No se puede, no hay tortillas";
+public class DoublyLinkedList {
+    private DoublyLink first; 
+    private DoublyLink last; 
+    private String msgError = "No se puede, no hay tortillas";
     
     public DoublyLinkedList() {
         first = null; 
         last = null;
     }
 
+    public String getError(){return msgError;}
     public boolean isEmpty() { 
         return first==null; 
     }
 
-    public E showFirst(){
+    public DoublyLink showFirst(){
         if(isEmpty())   System.out.println("Lista vacía");
-        return first.dData;
+        return first;
     }
-    public E showLast(){
+    public DoublyLink showLast(){
         if(isEmpty())   System.out.println("Lista vacía");
-        return last.dData;
+        return last;
     }
 
-    public void insertFirst(E dd){
-        DoublyLink<E> newLink = new DoublyLink<> (dd); 
+    public void insertFirst(long dd){
+        DoublyLink newLink = new DoublyLink(dd); 
         if( isEmpty() ) 
             last = newLink; 
         else
@@ -31,8 +32,8 @@ public class DoublyLinkedList<E> {
         first = newLink;
     }
 
-    public void insertLast(E dd) {
-        DoublyLink<E> newLink = new DoublyLink<> (dd); 
+    public void insertLast(long dd) {
+        DoublyLink newLink = new DoublyLink(dd); 
         if( isEmpty() ) 
             first = newLink; 
         else {
@@ -42,8 +43,8 @@ public class DoublyLinkedList<E> {
         last = newLink; 
     }
 
-    public DoublyLink<E> deleteFirst() { 
-        DoublyLink<E> temp = first;
+    public DoublyLink deleteFirst() { 
+        DoublyLink temp = first;
         if(first.next == null) 
             last = null;
         else
@@ -52,8 +53,8 @@ public class DoublyLinkedList<E> {
         return temp;
     }
 
-    public DoublyLink<E> deleteLast(){
-        DoublyLink<E> temp = last;
+    public DoublyLink deleteLast(){
+        DoublyLink temp = last;
         if(first.next == null) 
             first = null; 
         else
@@ -62,16 +63,16 @@ public class DoublyLinkedList<E> {
         return temp;
     }
     
-    public boolean insertAfter(E key, E dd) { 
-        DoublyLink<E> current = search(key);    /*#####if(search(key) != null)*/
+    public boolean insertAfter(long key, long dd) { 
+        DoublyLink current = search(key); 
         if(current == last) insertLast(dd); //Solo quedaría ser first o en medio
         else                insertLink(current, current.next, dd);
         return true; 
     }
 
-    public boolean insertBefore(E key, E dd){
-        DoublyLink<E> current = search(key);    /*#####if(search(key) != null*/
-        if(current == first) insertFirst(dd);//Solo quedaría ser last o en medio
+    public boolean insertBefore(long key, long dd){
+        DoublyLink current = search(key); 
+        if(current == first) insertFirst(key);//Solo quedaría ser last o en medio
         else                 insertLink(current.previous, current, dd);
         return true;
     }
@@ -79,9 +80,9 @@ public class DoublyLinkedList<E> {
     //Acomodamos el insertLink para que vaya de izquierda a derecha sin
     //importar si es after o before. After empieza con current -> current.next
     //before empieza con current.before -> current
-    public boolean insertLink (DoublyLink<E> route, DoublyLink<E> link, E ddNew){
+    public boolean insertLink (DoublyLink route, DoublyLink link, long key){
         //Si no primero ni ultimo; Será medio
-            DoublyLink<E> newLink = new DoublyLink<>(ddNew);
+            DoublyLink newLink = new DoublyLink(key);
             newLink.next = link;
             newLink.previous = route;
             route.next = newLink;
@@ -89,44 +90,46 @@ public class DoublyLinkedList<E> {
         return true;
     }
 
-    public DoublyLink<E> deleteAfter(E key){
-        DoublyLink<E> current = search(key);         
-        if(current==last || current == null) System.out.println(msgError);
+    public DoublyLink deleteAfter(long key){
+        DoublyLink current = search(key);         
+        if(current==last) System.out.println(getError());
         else              return deleteKey(current.next.dData);
-    return current; //Por aquí debería ser null
+    return null;
     }
 
-    public DoublyLink<E> deleteBefore(E key){
-        DoublyLink<E> current = search(key);
-        if(current==first || current == null) System.out.println(msgError);
+    public DoublyLink deleteBefore(long key){
+        DoublyLink current = search(key);         
+        if(current==first) System.out.println(getError());
         else               return deleteKey(current.previous.dData);
-    return current; //Por aquí debería ser null
+    return null;
     }
 
     
-    public DoublyLink<E> deleteKey(E key) { //Eliminar nodo dado
-        DoublyLink<E> current = search(key);
+    public DoublyLink deleteKey(long key) { //Eliminar nodo dado
+        DoublyLink current = search(key);
         
         if(current != first && current != last){ //Si no es primero ni
             current.previous.next = current.next;   //ultimo, estará en
             current.next.previous = current.previous;  //medio de nodos
         } else {
-            if(current==first) current = deleteFirst();
-            else               current = deleteLast();
+            if(current==first)  deleteFirst();
+            else                deleteLast();
         }
     return current;
     }
 
-    public void updateData(E key, E newData){
-        DoublyLink<E> current = search(key);   //Actualizar dato de NODO con key
-        if(current != null)     current.dData = newData;
-        else                    System.out.println("Nodo no encontrado - "+msgError);
+    public void updateData(long key, long newData){
+        DoublyLink current = search(key);   //Actualizar dato de NODO con key
+        if(current != null){
+            current.dData = newData;
+        }
+
     }
 
-    public DoublyLink<E>  search(E key){    //Buscar nodo por llave/dData
-        DoublyLink<E> current = first;
+    public DoublyLink  search(long key){    //Buscar nodo por llave/dData
+        DoublyLink current = first;
         while(current!=null){
-            if(current.dData == key)    break;
+            if(current.dData == key) break;
             current = current.next;
         }
         return current;
@@ -134,7 +137,7 @@ public class DoublyLinkedList<E> {
 
     public void displayForward() {
         System.out.print("List (first-->last): ");
-        DoublyLink<E> current = first;
+        DoublyLink current = first;
         while(current != null) {
             current.displayLink(); 
             current = current.next; 
@@ -144,7 +147,7 @@ public class DoublyLinkedList<E> {
 
     public void displayBackward() {
         System.out.print("List (last-->first): ");
-        DoublyLink<E> current = last;
+        DoublyLink current = last;
         while(current != null) {
             current.displayLink(); 
             current = current.previous; 
