@@ -1,16 +1,16 @@
 public class Movie {
-    private long   id;
-    private String title;
-    private int    duration;
-    private String color;
-    private String language;
-    private String country;
-    private String rating;
-    private long   budget;
-    private int    year;
-    private double imdbScore;
-    private String aspectRatio;
-    private String imdbLink;
+    private long   id;          //0
+    private String title;       //1
+    private int    duration;    //2
+    private String color;       //3
+    private String language;    //4
+    private String country;     //5
+    private String rating;      //6    
+    private long   budget;      //7
+    private int    year;        //8
+    private double imdbScore;   //9
+    private String aspectRatio; //10
+    private String imdbLink;    //11
 
     public Movie(long id, String title, int duration, String color, String language, String country, String rating,
             long budget, int year, double imdbScore, String aspectRatio, String imdbLink) {
@@ -59,5 +59,4 @@ public class Movie {
                 + ", duration=" + duration + ", id=" + id + ", imdbLink=" + imdbLink + ", imdbScore=" + imdbScore
                 + ", language=" + language + ", rating=" + rating + ", title=" + title + ", year=" + year + "]";
     }
-    
 }

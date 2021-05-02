@@ -1,29 +1,28 @@
-public class DoublyLinkedList {
-    private DoublyLink first; 
-    private DoublyLink last; 
-    private String msgError = "No se puede, no hay tortillas";
+public class MovieDoublyLinkedList {
+    private MovieDoublyLink first; 
+    private MovieDoublyLink last; 
+    public String msgError = "No se puede, no hay tortillas";
     
-    public DoublyLinkedList() {
+    public MovieDoublyLinkedList() {
         first = null; 
         last = null;
     }
 
-    public String getError(){return msgError;}
     public boolean isEmpty() { 
         return first==null; 
     }
 
-    public DoublyLink showFirst(){
+    public MovieDoublyLink showFirst(){
         if(isEmpty())   System.out.println("Lista vacía");
         return first;
     }
-    public DoublyLink showLast(){
+    public MovieDoublyLink showLast(){
         if(isEmpty())   System.out.println("Lista vacía");
         return last;
     }
 
-    public void insertFirst(long dd){
-        DoublyLink newLink = new DoublyLink(dd); 
+    public void insertFirst(Movie dd){
+        MovieDoublyLink newLink = new MovieDoublyLink(dd); 
         if( isEmpty() ) 
             last = newLink; 
         else
@@ -32,8 +31,8 @@ public class DoublyLinkedList {
         first = newLink;
     }
 
-    public void insertLast(long dd) {
-        DoublyLink newLink = new DoublyLink(dd); 
+    public void insertLast(Movie dd) {
+        MovieDoublyLink newLink = new MovieDoublyLink(dd); 
         if( isEmpty() ) 
             first = newLink; 
         else {
@@ -43,8 +42,8 @@ public class DoublyLinkedList {
         last = newLink; 
     }
 
-    public DoublyLink deleteFirst() { 
-        DoublyLink temp = first;
+    public MovieDoublyLink deleteFirst() { 
+        MovieDoublyLink temp = first;
         if(first.next == null) 
             last = null;
         else
@@ -53,8 +52,8 @@ public class DoublyLinkedList {
         return temp;
     }
 
-    public DoublyLink deleteLast(){
-        DoublyLink temp = last;
+    public MovieDoublyLink deleteLast(){
+        MovieDoublyLink temp = last;
         if(first.next == null) 
             first = null; 
         else
@@ -63,16 +62,16 @@ public class DoublyLinkedList {
         return temp;
     }
     
-    public boolean insertAfter(long key, long dd) { 
-        DoublyLink current = search(key); 
+    public boolean insertAfter(long key, Movie dd) { 
+        MovieDoublyLink current = search(key); 
         if(current == last) insertLast(dd); //Solo quedaría ser first o en medio
         else                insertLink(current, current.next, dd);
         return true; 
     }
 
-    public boolean insertBefore(long key, long dd){
-        DoublyLink current = search(key); 
-        if(current == first) insertFirst(key);//Solo quedaría ser last o en medio
+    public boolean insertBefore(long key, Movie dd){
+        MovieDoublyLink current = search(key); 
+        if(current == first) insertFirst(dd);//Solo quedaría ser last o en medio
         else                 insertLink(current.previous, current, dd);
         return true;
     }
@@ -80,9 +79,9 @@ public class DoublyLinkedList {
     //Acomodamos el insertLink para que vaya de izquierda a derecha sin
     //importar si es after o before. After empieza con current -> current.next
     //before empieza con current.before -> current
-    public boolean insertLink (DoublyLink route, DoublyLink link, long key){
+    public boolean insertLink (MovieDoublyLink route, MovieDoublyLink link, Movie ddNew){
         //Si no primero ni ultimo; Será medio
-            DoublyLink newLink = new DoublyLink(key);
+            MovieDoublyLink newLink = new MovieDoublyLink(ddNew);
             newLink.next = link;
             newLink.previous = route;
             route.next = newLink;
@@ -90,46 +89,44 @@ public class DoublyLinkedList {
         return true;
     }
 
-    public DoublyLink deleteAfter(long key){
-        DoublyLink current = search(key);         
-        if(current==last) System.out.println(getError());
-        else              return deleteKey(current.next.dData);
+    public MovieDoublyLink deleteAfter(long key){
+        MovieDoublyLink current = search(key);         
+        if(current==last || current == null) System.out.println(msgError);
+        else              return deleteKey(current.next.dData.getId());
     return null;
     }
 
-    public DoublyLink deleteBefore(long key){
-        DoublyLink current = search(key);         
-        if(current==first) System.out.println(getError());
-        else               return deleteKey(current.previous.dData);
+    public MovieDoublyLink deleteBefore(long key){
+        MovieDoublyLink current = search(key);         
+        if(current==first || current == null) System.out.println(msgError);
+        else               return deleteKey(current.previous.dData.getId());
     return null;
     }
 
     
-    public DoublyLink deleteKey(long key) { //Eliminar nodo dado
-        DoublyLink current = search(key);
+    public MovieDoublyLink deleteKey(long key) { //Eliminar nodo dado
+        MovieDoublyLink current = search(key);
         
         if(current != first && current != last){ //Si no es primero ni
             current.previous.next = current.next;   //ultimo, estará en
             current.next.previous = current.previous;  //medio de nodos
         } else {
-            if(current==first)  deleteFirst();
-            else                deleteLast();
+            if(current==first)  current = deleteFirst();
+            else                current = deleteLast();
         }
     return current;
     }
 
-    public void updateData(long key, long newData){
-        DoublyLink current = search(key);   //Actualizar dato de NODO con key
-        if(current != null){
-            current.dData = newData;
-        }
-
+    public void updateData(Long key, Movie newData){
+        MovieDoublyLink current = search(key);   //Actualizar dato de NODO con key
+        if(current != null)   current.dData = newData;
+        else                  System.out.println("Nodo no encontrado - "+msgError);
     }
 
-    public DoublyLink  search(long key){    //Buscar nodo por llave/dData
-        DoublyLink current = first;
+    public MovieDoublyLink  search(long key){    //Buscar nodo por llave/dData
+        MovieDoublyLink current = first;
         while(current!=null){
-            if(current.dData == key) break;
+            if(current.dData.getId() == key)    break;
             current = current.next;
         }
         return current;
@@ -137,7 +134,7 @@ public class DoublyLinkedList {
 
     public void displayForward() {
         System.out.print("List (first-->last): ");
-        DoublyLink current = first;
+        MovieDoublyLink current = first;
         while(current != null) {
             current.displayLink(); 
             current = current.next; 
@@ -147,7 +144,7 @@ public class DoublyLinkedList {
 
     public void displayBackward() {
         System.out.print("List (last-->first): ");
-        DoublyLink current = last;
+        MovieDoublyLink current = last;
         while(current != null) {
             current.displayLink(); 
             current = current.previous; 
