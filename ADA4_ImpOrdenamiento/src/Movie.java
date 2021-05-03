@@ -1,5 +1,5 @@
 public class Movie {
-    private long   id;          //0
+    private int   id;          //0
     private String title;       //1
     private int    duration;    //2
     private String color;       //3
@@ -12,7 +12,7 @@ public class Movie {
     private String aspectRatio; //10
     private String imdbLink;    //11
 
-    public Movie(long id, String title, int duration, String color, String language, String country, String rating,
+    public Movie(int id, String title, int duration, String color, String language, String country, String rating,
             long budget, int year, double imdbScore, String aspectRatio, String imdbLink) {
         this.id = id;
         this.title = title;
@@ -28,8 +28,8 @@ public class Movie {
         this.imdbLink = imdbLink;
     }
 
-    public long     getId(){                                return id;}
-    public void     setId(          long    id){            this.id = id;}
+    public int     getId(){                                 return id;}
+    public void     setId(          int    id){             this.id = id;}
     public String   getTitle(){                             return title;}
     public void     setTitle(       String  title){         this.title = title;}
     public int      getDuration(){                          return duration;}
@@ -55,8 +55,14 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie [aspectRatio=" + aspectRatio + ", budget=" + budget + ", color=" + color + ", country=" + country
-                + ", duration=" + duration + ", id=" + id + ", imdbLink=" + imdbLink + ", imdbScore=" + imdbScore
-                + ", language=" + language + ", rating=" + rating + ", title=" + title + ", year=" + year + "]";
+        //String output = "MOVIE ["+id+"  "+ title+"  "+ duration+"  "+ color+"  "+ language+"  "+ country+"  "+ rating+"  "+ budget+"  "+ year+"  "+ imdbScore+"  "+ aspectRatio+"  "+ imdbLink;
+        //String output = "MOVIE ["+id+" , "+ title+" , "+ duration+" , "+ color+" , "+ language+" , "+ country+" , "+ rating+" , "+ budget+" , "+ year+" , "+ imdbScore+" , "+ aspectRatio+" , "+ imdbLink;
+        String output = "ID="+id+", TITTLE="+ title+", DURATION="+ duration+", COLOR="+ color+", LANGUAGE="+ language+", COUNTRY="+ country+", RATING="+ rating+", BUDGET="+ budget+", YEAR="+ year+", IMDB="+ imdbScore+", ASPECT RATIO="+ aspectRatio+", IMDB-LINK="+ imdbLink;
+        /*return "Movie [id=" + id + ", title=" + title + ", aspectRatio=" + aspectRatio + ", budget=" + budget
+                + ", color=" + color + ", country=" + country + ", duration=" + duration + ", imdbLink=" + imdbLink
+                + ", imdbScore=" + imdbScore + ", language=" + language + ", rating=" + rating  + ", year=" + year + "]";*/
+        return output;
     }
+
+    
 }
