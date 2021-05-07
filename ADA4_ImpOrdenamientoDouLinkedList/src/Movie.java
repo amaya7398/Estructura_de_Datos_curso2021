@@ -62,12 +62,7 @@ public class Movie {
 
     @Override
     public String toString() {
-        //String output = "MOVIE ["+id+"  "+ title+"  "+ duration+"  "+ color+"  "+ language+"  "+ country+"  "+ rating+"  "+ budget+"  "+ year+"  "+ imdbScore+"  "+ aspectRatio+"  "+ imdbLink;
-        //String output = "MOVIE ["+id+" , "+ title+" , "+ duration+" , "+ color+" , "+ language+" , "+ country+" , "+ rating+" , "+ budget+" , "+ year+" , "+ imdbScore+" , "+ aspectRatio+" , "+ imdbLink;
-        String output = "ID="+id+", TITTLE="+ title+", DURATION="+ duration+", COLOR="+ color+", LANGUAGE="+ language+", COUNTRY="+ country+", RATING="+ rating+", BUDGET="+ budget+", YEAR="+ year+", IMDB="+ imdbScore+", ASPECT RATIO="+ aspectRatio+", IMDB-LINK="+ imdbLink;
-        /*return "Movie [id=" + id + ", title=" + title + ", aspectRatio=" + aspectRatio + ", budget=" + budget
-                + ", color=" + color + ", country=" + country + ", duration=" + duration + ", imdbLink=" + imdbLink
-                + ", imdbScore=" + imdbScore + ", language=" + language + ", rating=" + rating  + ", year=" + year + "]";*/
+        String output = "ID="+id+", TITTLE="+ title+", DURATION="+ duration+", COLOR="+ color+", LANGUAGE="+ language+", COUNTRY="+ country+", RATING="+ rating+", BUDGET="+ budget+", YEAR="+ year+", IMDB="+ imdbScore+", ASPECT RATIO="+ aspectRatio+", IMDB-LINK="+ imdbLink+"\n";
         return output;
     }
 

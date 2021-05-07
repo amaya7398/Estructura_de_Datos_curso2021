@@ -5,7 +5,7 @@ public class Main {
         System.out.println("hola mundo");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {    //Movie.csv moviesOrdenado.csv
         Scanner scanner = new Scanner(System.in);
         int option;
         long timeInit, timeEnd, time;

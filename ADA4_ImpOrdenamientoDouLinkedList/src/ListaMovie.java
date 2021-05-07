@@ -7,53 +7,39 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ListaMovie {
-    //private static Movie[] lista;
-    private static int maxMovies;
-    private static ArrayList<Movie> list = new ArrayList<>();
+    private static int maxMovies = 10; // < here and line 40, if u dont want a limit, erase it. (IN  loadFila())
     private static File csvFileMovies = null ;
-    //private static final String csvMoviesOut = "moviesOrdenado.csv";
     private static String csvMoviesOut = null;
     private static File sortedMoviesOut = null ;
-    ;
+    private static MovieDoublyLinkedList list = new MovieDoublyLinkedList();
 
     ListaMovie(String in, String out ){
         try {
             loadFile(in, out);
             loadMovies();
-            preview(true);
+            //preview(true);
+            list.displayForward();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private static void loadFile(String in, String out){
-        
         csvFileMovies = new File(in);
         sortedMoviesOut = new File(out);
         csvMoviesOut = out;
-        
-        /*Scanner scanner = new Scanner(System.in);
-        System.out.println("INSERT PATH FILE || [0] : Movie.csv ");
-        String file = scanner.next();
-
-        if(file.equals("0")){
-            csvFileMovies = new File("Movie.csv");
-        } else {
-            csvFileMovies = new File(file);
-        }*/
-        //scanner.close();
     }
 
     private static void loadMovies() {
         String splitBy = ",";
         String line;
         boolean firstLine = true;
+        int cont=0;
         
         //reader.close(); finally => try-catch-finally ==> try-with-resources
         try(BufferedReader reader = new BufferedReader(new FileReader(csvFileMovies))) {
-            //BufferedReader reader = new BufferedReader(new FileReader(csvFileMovies));
             System.out.println("Cargando...");
-            while( ((line = reader.readLine()) != null) && maxMovies < 10  ){
+            while( ((line = reader.readLine()) != null) && (cont < maxMovies)  ){  //<== change value "10"
                 //skip header
                 if(firstLine){
                     firstLine = false;
@@ -61,9 +47,10 @@ public class ListaMovie {
                 } 
                 String[] raw = line.split(splitBy);
                 Movie newMovie = createMovie(raw);
-                list.add(newMovie);
-                maxMovies++;
+                list.insertLast(newMovie);
+                cont++;
             }
+            System.out.println(cont); 
             System.out.println("CARGA EXITOSA\n");
         } catch (IOException e) {
             System.out.println("ERROR! ... StackTrace");
@@ -91,17 +78,14 @@ public class ListaMovie {
         return new Movie(id, title, duration, color, language, country, rating, budget, year, imdbScore, aspectRatio, imdbLink);
     }
 
+    public static void show(boolean option){
+        preview(option);        
+    }
+
     private static void preview(boolean option ){
         System.out.println("PREVIEW:");
-        
-        if(option){
-            for(int i=0 ; i<5 ; i++)
-                System.out.println(list.get(i));
-        } else {
-            for (int i = list.size()-1 ; i>list.size()-6; i--)
-                System.out.println(list.get(i));      //SAME
-        }
-        
+        if(option)      list.displayForward(5);
+        else            list.displayBackward(5);
         System.out.println("...");
     }
 
@@ -109,21 +93,27 @@ public class ListaMovie {
         String line = null;
         
         try(FileWriter fichero = new FileWriter(csvMoviesOut)) {
+            MovieDoublyLink  current = null;
             
             if(sortedMoviesOut.createNewFile())    sortedMoviesOut.mkdirs(); //Just create fichero.csv
             // Lower to Higher
             if(side){
                 System.out.println("Persevere ... -/+");
-                for(Movie m : list){
-                    line = createLine(m);
-                    fichero.write(line);
-                }
                 
+                current = list.firstLinked(); //left to right
+                while(current != null){
+                    line = createLine(current.getMovie());
+                    fichero.write(line);
+                    current = current.next;
+                }
             } else {    // Higher to Lower
                 System.out.println("Persevere ... +/-");
-                for (int i = list.size()-1 ; i>=0; i--){
-                    line = createLine(list.get(i));
+                
+                current = list.lastLinked(); //right to left
+                while(current != null){
+                    line = createLine(current.getMovie());
                     fichero.write(line);
+                    current = current.previous;
                 }
             }
             fichero.flush();
@@ -139,25 +129,13 @@ public class ListaMovie {
                 m.getYear()+","+m.getImdbScore()+","+m.getAspectRatio()+","+m.getImdbLink()+"\n";
     }
 
-    public static void show(boolean option){
-        if(option)      preview(option); // -/+
-        if(!option)     preview(option);// +/-
-        /*
-        if(option){
-            for (Movie movie : list)
-                //System.out.println(movie);  //Just print execution time, compare and swap, CHANGE IT FOR THE "preview()" FUNCTION
-        } else {
-            for (int i = list.size()-1 ; i>=0; i--)
-                //System.out.println(list.get(i));      //SAME
-        }*/
-    }
-
     //Sorting then persistir Movies =>  moviesordenado.csv
     public static void sorting(boolean option){
         if(option){
             SelectionSort.sortByID(list);
         } else {
-            SelectionSort.sortByTittle(list);
+            System.out.println("nomas nada");
+            //SelectionSort.sortByTittle(list);
         }
     }
 
