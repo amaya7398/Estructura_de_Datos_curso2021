@@ -3,13 +3,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import jdk.javadoc.internal.tool.Start;
 
 public class ListaMovie {
-    private static int maxMovies = 10; // < here and line 40, if u dont want a limit, erase it. (IN  loadFila())
+    private static int maxMovies = 50; // < here and line 40, if u dont want a limit, erase it. (IN  loadFila())
     private static File csvFileMovies = null ;
     private static String csvMoviesOut = null;
     private static File sortedMoviesOut = null ;
@@ -20,7 +16,7 @@ public class ListaMovie {
             loadFile(in, out);
             loadMovies();
             preview(true);
-            //list.displayForward();
+            list.displayForward();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,7 +48,7 @@ public class ListaMovie {
                 list.insertLast(newMovie);
                 cont++;
             }
-            System.out.println(cont); 
+            System.out.println(cont+" movies loaded"); 
             System.out.println("CARGA EXITOSA\n");
         } catch (IOException e) {
             System.out.println("ERROR! ... StackTrace");

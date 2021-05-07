@@ -10,7 +10,8 @@ public class Main {
         int option;
         long timeInit, timeEnd, time;
 
-        ListaMovie unu = new ListaMovie(args[0], args[1]);
+        if(args.length < 2){     ListaMovie unu = new ListaMovie("Movie.csv", "moviesOrdenado.csv");
+        }else{                    ListaMovie unu = new ListaMovie(args[0], args[1]); }
 
         do {
             time = 0;
@@ -61,7 +62,7 @@ public class Main {
                 default:
                     System.out.println("\nERROR!\n");
             }
-            if(option>0 && option<4)    System.out.println("Execution time in milliseconds: "+ time);
+            if(option>=0 && option<4)    System.out.println("Execution time in milliseconds: "+ time);
         } while (option != 0);
         scanner.close();
     }
