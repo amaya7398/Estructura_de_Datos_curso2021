@@ -21,8 +21,9 @@ public class Main {
                     System.out.println("grax");
                     break;
                 case 1:
-                        System.out.println("\nBinary search...\nInsert ID:");
-                        int dataId = scanner.nextInt();
+                    ListaMovie.sorting(true); //SORt BY ID
+                    System.out.println("\nBinary search...\nInsert ID:");
+                    int dataId = scanner.nextInt();
                     timeInit = System.currentTimeMillis();
                         Movie movie = ListaMovie.binarySearch(dataId);
                         System.out.println(movie);
@@ -30,7 +31,7 @@ public class Main {
                     time = timeEnd - timeInit;
                     break;
                 case 2:
-                        System.out.println("\nSORTING BY ID ...");
+                    System.out.println("\nSORTING BY ID ...");
                     timeInit = System.currentTimeMillis();
                         ListaMovie.sorting(true);   //True -> SortByID
                     timeEnd = System.currentTimeMillis();
@@ -38,7 +39,7 @@ public class Main {
                     ListaMovie.persistirMovies(true);
                     break;
                 case 3:
-                        System.out.println("\nSORTING BY TITTLE ...");
+                    System.out.println("\nSORTING BY TITTLE ...");
                     timeInit = System.currentTimeMillis();
                         ListaMovie.sorting(false);  //False -> SortByTittle
                     timeEnd = System.currentTimeMillis();
@@ -60,7 +61,7 @@ public class Main {
                 default:
                     System.out.println("\nERROR!\n");
             }
-            System.out.println("Execution time in milliseconds: "+ time);
+            if(option>0 && option<4)    System.out.println("Execution time in milliseconds: "+ time);
         } while (option != 0);
         scanner.close();
     }

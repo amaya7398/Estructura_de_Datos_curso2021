@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import jdk.javadoc.internal.tool.Start;
+
 public class ListaMovie {
     private static int maxMovies = 10; // < here and line 40, if u dont want a limit, erase it. (IN  loadFila())
     private static File csvFileMovies = null ;
@@ -17,8 +19,8 @@ public class ListaMovie {
         try {
             loadFile(in, out);
             loadMovies();
-            //preview(true);
-            list.displayForward();
+            preview(true);
+            //list.displayForward();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -131,33 +133,59 @@ public class ListaMovie {
 
     //Sorting then persistir Movies =>  moviesordenado.csv
     public static void sorting(boolean option){
-        if(option){
+        SelectionSort.sortingBy(list, option);
+        /*if(option){
             SelectionSort.sortByID(list);
         } else {
-            System.out.println("nomas nada");
-            //SelectionSort.sortByTittle(list);
-        }
+            SelectionSort.sortByTittle(list);
+        }*/
     }
 
+    //##############################################################################################
+    //############### BINARY SEARCH, COULD BE ANOTHER CLASS ########################################
+    //##############################################################################################
+
     public static Movie binarySearch(int data){
-        int index = search(list, data, 0, list.size());
+        MovieDoublyLink first = list.firstLinked();
+        MovieDoublyLink last = list.lastLinked();
+        
         Movie movie;
-        if (index < 0){
-            movie = new Movie();
-        } else {
-            movie = list.get(index);
-        }
+        movie = search(list, data,first, last);
         return movie;
     }
 
-    private static int search(ArrayList<Movie> list, int data, int first, int last) {
-        //int mid = (first + last) / 2;
-        int mid = (int) Math.floor((first + last) / 2);
-        //
-        if (data == list.get(mid).getId())      return mid;
-        if (last <= first)                       return -1;
-        if (data < list.get(mid).getId())       return search(list, data, first, mid - 1);
-        if (data > list.get(mid).getId())       return search(list, data, mid + 1, last);
-        return -1;
+    private static Movie search(MovieDoublyLinkedList list, int data ,MovieDoublyLink first, MovieDoublyLink last) {
+        MovieDoublyLink mid = mid(first, last);
+
+        try {
+            if (data == mid.getMovie().getId())          return mid.getMovie();
+            //if (last == first)                           return new Movie(); //Basically NULL
+            if (data > mid.getMovie().getId())           return search(list, data, mid.next, last);
+            if (data < mid.getMovie().getId())           return search(list, data, first, mid);
+        } catch (NullPointerException e){
+            System.out.println("\n#### NO MOVIE ####");
+        }
+        return new Movie();
+    }
+
+    private static MovieDoublyLink mid(MovieDoublyLink first, MovieDoublyLink last){
+        if (first == null) 
+            return null; 
+        MovieDoublyLink slow = first; 
+        MovieDoublyLink fast = null ; // first.next; 
+        if(first.next != null){
+            fast = first.next; 
+        } else {
+            fast = first; 
+        }
+        
+        while (fast != last) { 
+        fast = fast.next; 
+            if (fast != last) { 
+                slow = slow.next; 
+                fast = fast.next; 
+            } 
+        } 
+    return slow;
     }
 }
