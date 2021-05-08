@@ -16,7 +16,6 @@ public class ListaMovie {
             loadFile(in, out);
             loadMovies();
             preview(true);
-            list.displayForward();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,7 +35,7 @@ public class ListaMovie {
         
         //reader.close(); finally => try-catch-finally ==> try-with-resources
         try(BufferedReader reader = new BufferedReader(new FileReader(csvFileMovies))) {
-            System.out.println("Cargando...");
+            System.out.println("Loading...");
             while( ((line = reader.readLine()) != null) && (cont < maxMovies)  ){  //<== change value "10"
                 //skip header
                 if(firstLine){
@@ -49,7 +48,7 @@ public class ListaMovie {
                 cont++;
             }
             System.out.println(cont+" movies loaded"); 
-            System.out.println("CARGA EXITOSA\n");
+            System.out.println("LOAD DONE\n");
         } catch (IOException e) {
             System.out.println("ERROR! ... StackTrace");
             e.printStackTrace();
@@ -128,13 +127,8 @@ public class ListaMovie {
     }
 
     //Sorting then persistir Movies =>  moviesordenado.csv
-    public static void sorting(boolean option){
-        SelectionSort.sortingBy(list, option);
-        /*if(option){
-            SelectionSort.sortByID(list);
-        } else {
-            SelectionSort.sortByTittle(list);
-        }*/
+    public static void sorting(boolean option, boolean lowToHigh){
+        SelectionSort.sortingBy(list, option, lowToHigh);
     }
 
     //##############################################################################################
