@@ -1,37 +1,34 @@
-public class Node <T>{
-    private T data;
-    private Node<T> leftChild;
-    private Node<T> rightChild;
+public class Node{
+    private int data;
+    private Node leftChild;
+    private Node rightChild;
 
     public void displayNode(){
-        System.out.println( "("+data+")" ); 
+        System.out.print("("); 
+        System.out.print(data); 
+        System.out.print(")");
     }
 
-    public T getData(){
+    public int getData(){
         return this.data;
     }
-    public void setData(T data){
+    public void setData(int data){
         this.data = data;
     }
 
-    public Node<T> getLeftChild(){
+    public Node getLeftChild(){
         return this.leftChild;
     }
 
-    public Node<T> getRightChild(){
+    public Node getRightChild(){
         return this.rightChild;
     }
 
-    public void setLeftChild(Node<T> left){
+    public void setLeftChild(Node left){
         this.leftChild = left;
     }
 
-    public void setRightChild(Node<T> right){
+    public void setRightChild(Node right){
         this.rightChild = right;
-    }
-
-    @Override
-    public String toString() {
-        return "" + data;
     }
 }

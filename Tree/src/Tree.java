@@ -1,5 +1,5 @@
 public class Tree{
-    private Node root;
+    Node root;
 
     public Tree(){
         root = null;
@@ -65,18 +65,18 @@ public class Tree{
     }
 
     private void preOrder(Node auxRoot) {
-        System.out.println(auxRoot.getData()); 
+        System.out.println(auxRoot.getData());
+        preOrder(auxRoot.getLeftChild());
+        preOrder(auxRoot.getRightChild());
+    }
+
+    private void inOrder(NodeGenerico auxRoot) {
         if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
+        System.out.println(auxRoot.getData()); 
         if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
     }
 
-    private void inOrder(Node auxRoot) {
-        if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
-        System.out.println(auxRoot.getData()); 
-        if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
-    }
-
-    private void postOrder(Node auxRoot) {
+    private void postOrder(NodeGenerico auxRoot) {
         if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
         if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
         System.out.println(auxRoot.getData());
@@ -85,7 +85,7 @@ public class Tree{
     public void displayTree(){
         displayNodes(root);
     }
-    private void displayNodes(Node node){
+    private void displayNodes(NodeGenerico node){
         if(node.getLeftChild() == null && node.getRightChild() == null)
             System.out.println("("+node+")");
         else {
