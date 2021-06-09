@@ -5,3 +5,10 @@ Exp: 2 3 4 * + ; Eval:14.0
 Exp: 2 3 + 4 * ; Eval:20.0
 Exp: 2 2 ** 4 / ; Eval:1.0
 Exp: 2 5 - 3 2 ** + ; Eval:6.0
+Exp: 2 3 + ; Eval:5.0
+Exp: 2 3 4 + * ; Eval:14.0
+Exp: 2 4 + 7 * 3 9 5 - * + ; Eval:54.0
+Exp: 2 3 4 * + ; Eval:14.0
+Exp: 2 3 + 4 * ; Eval:20.0
+Exp: 2 2 ** 4 / ; Eval:1.0
+Exp: 2 5 - 3 2 ** + ; Eval:6.0

@@ -7,6 +7,65 @@ public class TreeGenerico<T extends Comparable<T>> {
         root = null;
     }
 
+    public NodeGenerico<T> getRoot(){
+        return root;
+    } 
+
+    public void traverse(int type) {
+        switch(type) {
+        case 1:
+            System.out.print("\nPreorder traversal: "); 
+            preOrder(root);
+            break;
+        case 2:
+            System.out.print("\nInorder traversal: "); 
+            inOrder(root);
+            break;
+        case 3:
+            System.out.print("\nPostorder traversal: "); 
+            postOrder(root);
+            break;
+        default:
+            System.out.println("ERROR!");
+        }
+        System.out.println(); 
+    }
+
+    private void preOrder(NodeGenerico<T> auxRoot) {
+        System.out.println(auxRoot.getData()); 
+        if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
+        if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
+    }
+
+    private void inOrder(NodeGenerico<T> auxRoot) {
+        if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
+        System.out.println(auxRoot.getData()); 
+        if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
+    }
+
+    private void postOrder(NodeGenerico<T> auxRoot) {
+        if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
+        if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
+        System.out.println(auxRoot.getData());
+    }
+
+    public void displayTree(){
+        displayNodes(root);
+    }
+    private void displayNodes(NodeGenerico<T> node){
+        if(node.getLeftChild() == null && node.getRightChild() == null)
+            System.out.println("("+node+")");
+        else {
+            System.out.println( node.getLeftChild() +" <= "+ node +" => "+ node.getRightChild() );
+            if(node.getLeftChild() != null )    displayNodes(node.getLeftChild());
+            if(node.getRightChild() != null )   displayNodes(node.getRightChild());
+        }
+    }
+
+
+
+
+
     public NodeGenerico<T> find(T data) {
         NodeGenerico<T> current = root;
         try {
@@ -181,74 +240,12 @@ public class TreeGenerico<T extends Comparable<T>> {
         return toDelete;
     }
 
-    public void traverse(int type) {
-        switch(type) {
-        case 1:
-            System.out.print("\nPreorder traversal: "); 
-            preOrder(root);
-            break;
-        case 2:
-            System.out.print("\nInorder traversal: "); 
-            inOrder(root);
-            break;
-        case 3:
-            System.out.print("\nPostorder traversal: "); 
-            postOrder(root);
-            break;
-        default:
-            System.out.println("ERROR!");
-        }
-        System.out.println(); 
-    }
 
-    private void preOrder(NodeGenerico<T> auxRoot) {
-        System.out.println(auxRoot.getData()); 
-        if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
-        if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
-    }
 
-    private void inOrder(NodeGenerico<T> auxRoot) {
-        if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
-        System.out.println(auxRoot.getData()); 
-        if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
-    }
+}
 
-    private void postOrder(NodeGenerico<T> auxRoot) {
-        if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
-        if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
-        System.out.println(auxRoot.getData());
-    }
 
-    public void displayTree(){
-        displayNodes(root);
-    }
-    private void displayNodes(NodeGenerico<T> node){
-        if(node.getLeftChild() == null && node.getRightChild() == null)
-            System.out.println("("+node+")");
-        else {
-            System.out.println( node.getLeftChild() +" <= "+ node +" => "+ node.getRightChild() );
-            if(node.getLeftChild() != null )    displayNodes(node.getLeftChild());
-            if(node.getRightChild() != null )   displayNodes(node.getRightChild());
-        }
-    }
-
-    public static void main(String[] args) {
-
-        TreeGenerico<Integer> a1 = new TreeGenerico<>();
-        a1.insert(10);
-        a1.insert(15);
-        a1.insert(12);
-        a1.insert(5);
-        a1.insert(7);
-        System.out.println("Finding: "+a1.find(11)+"\t"+ a1.find(5)+"\t"+ a1.find(15));
-        a1.displayTree();
-        a1.traverse(1);
-        a1.traverse(2);
-        a1.traverse(3);
-
-    System.out.println("============================================================");
-        
-        TreeGenerico<String> a2 = new TreeGenerico<>();
+/*TreeGenerico<String> a2 = new TreeGenerico<>();
         a2.insert("C");
         a2.insert("E");
         a2.insert("D");
@@ -267,7 +264,4 @@ public class TreeGenerico<T extends Comparable<T>> {
     //a2.displayTree();
         a2.traverse(1);
         a2.traverse(2);
-        a2.traverse(3);
-        
-    }
-}
+        a2.traverse(3);*/
