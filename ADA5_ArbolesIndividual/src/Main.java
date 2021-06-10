@@ -10,50 +10,40 @@ import java.util.*;
 
 public class Main {
    
-    static ArrayList<Prioridad> Lista = new ArrayList<Prioridad>();
-    static ArrayList<String> Lista2 = new ArrayList<String>();
+    static ArrayList<Prioridad> Lista = new ArrayList<Prioridad>(); //LISTA PARA PRIORIDADES DE OPERADORES
+    static ArrayList<String> Lista2 = new ArrayList<String>();      //LISTA CON CADENAS DE LAS EXPRESIONES, LINEAS CORRECTAS
+
     public static void main(String[] args) throws Exception {
+        TreeGenerico<Integer> a1 = new TreeGenerico<>();
+
         String infijo="";
         String postfijo="";
         String salida ="";
-        inicializarPrioridad(Lista);
-        generarArchivo();
-        String archivo= "exp_infijas.txt";
-        leerContenido(archivo);
-        
+        inicializarPrioridad(Lista);        //Llenamos "Lista" con las prioridades aritmeticas
+        generarArchivo();                   //Generamos archivo "exp_postfijas.txt" si no existe, y ya :V
+        String archivo= "exp_infijas.txt";  //Nombre del archivo en root del proyecto
+        leerContenido(archivo);             //Para todas las líneas: quitamos espacios, solo añadimos las líneas que tengan parentesis balanceados
+        //Despues de esta función solo habrán líneas correctas en "Lista2"
 
-        for(int i=0;i<Lista2.size();i++){          
+        for(int i=0;i<Lista2.size();i++){   //Iterar entre todas las líneas de expresiones aritmeticas
             try {
-                infijo = Lista2.get(i);
+                infijo = Lista2.get(i);     //Linea i
                 postfijo=aPostfijo(Lista,infijo);
                 String postfijo2=postfijo.replace("^", "**");
                 salida = "Exp: " + postfijo2 +"; Eval:"+ resultado(postfijo)+"\n";
+                
+                a.expresionesAritmeticas(infijo);  //Creamos arbol binario de expresiones aritmeticas simples, desde una expresión infija
+                String recorridos = a.tresRecorridos();
             } catch (Exception e) {
                 salida="ERROR\n";
             }
             anadirArchivo(salida);
             
+            BTreePrinter.printNode(a1.getRoot()); //Imprimir arbol Binario
+            
         }
         
-        TreeGenerico<Integer> a1 = new TreeGenerico<>();
-        a1.insert(10);
-        a1.insert(15);
-        a1.insert(12);
-        a1.insert(5);
-        a1.insert(7);
-        a1.insert(6);
-        a1.insert(8);
-        a1.insert(3);
-        a1.insert(1);
-        a1.insert(2);
-        System.out.println("Finding: "+a1.find(11)+"\t"+ a1.find(5)+"\t"+ a1.find(15));
-        a1.displayTree();
-        a1.traverse(1);
-        a1.traverse(2);
-        a1.traverse(3);
-
-        System.out.println("============================================================");
-        BTreePrinter.printNode(a1.getRoot());
+        
     }
 
     private static int regresarValor(ArrayList<Prioridad> Lista, char signo2) {
@@ -76,79 +66,70 @@ public class Main {
         
         int longitud =infijo.length()-1;
         // System.out.println("La longitud de la cadena es: "+longitud);
-        while (i < infijo.length()-1){   
-        char x= infijo.charAt(i);
-        // System.out.println("Posicion:"+(i)+" Caracter: "+x);
-        
-        int y=0;
-        if(Character.isDigit(x)){
-            y=1;
-        }
-        if(infijo.charAt(i)=='(')
-            y=2;
-        if(infijo.charAt(i)==')')
-            y=3;
-        if(infijo.charAt(i)==('*') || infijo.charAt(i)==('/') || infijo.charAt(i)=='+' || infijo.charAt(i)=='-' || infijo.charAt(i)=='^'){
-            y=4;
-            ope++;
-        
-        }
-        
-        switch(y){
-            //Caso de que es un número
-            case 1:
-            postfijo = postfijo + infijo.charAt(i);
-                if(i<longitud-1){
-                char p=infijo.charAt(i+1);
-                if(!Character.isDigit(p)){
-                    postfijo = postfijo + " ";
-                    num++;
-                }
-                    
-                }else{
-                    postfijo=postfijo+" ";
-                    num++;
-                }
-                    
-                
+        while (i < infijo.length()-1){
+            char x= infijo.charAt(i);
+            // System.out.println("Posicion:"+(i)+" Caracter: "+x);
             
-            break; 
-            //Caso de que es un paréntesis a la izquierda
-            case 2:
-            
-            pila.push(infijo.charAt(i));
-                
-            break;    
-                
-            //Caso de que es un paréntesis derecho
-            case 3:
-                
-            while(pila.isEmpty()!=true && pila.peek()!='('){
-                postfijo=postfijo + pila.peek()+" ";
-                pila.pop();
+            int y=0;
+            if(Character.isDigit(x)){
+                y=1;
             }
-                pila.pop();
-            break;
-            //Caso de que es un operador
-            case 4:
-                
-                int a = regresarValor(Lista,infijo.charAt(i));
-                int b=0;
-                if(pila.isEmpty()!=true){
-                b = regresarValor(Lista,pila.peek());
-                }
-                
-                while(pila.isEmpty()!=true && b>=a){
-                    postfijo=postfijo + pila.peek()+" ";
-                    pila.pop(); 
-                    if(pila.isEmpty()!=true)
-                    b=regresarValor(Lista,pila.peek());
-                }
-                
+            if(infijo.charAt(i)=='(')
+                y=2;
+            if(infijo.charAt(i)==')')
+                y=3;
+            if(infijo.charAt(i)==('*') || infijo.charAt(i)==('/') || infijo.charAt(i)=='+' || infijo.charAt(i)=='-' || infijo.charAt(i)=='^'){
+                y=4;
+                ope++;
+            }
+        
+            switch(y){
+                //Caso de que es un número
+                case 1:
+                postfijo = postfijo + infijo.charAt(i);
+                    if(i<longitud-1){
+                        char p = infijo.charAt(i+1);
+                        if(!Character.isDigit(p)){
+                            postfijo = postfijo + " ";
+                            num++;
+                        }
+                        
+                    }else{
+                        postfijo = postfijo + " ";
+                        num++;
+                    }
+                break; 
+
+                //Caso de que es un paréntesis a la izquierda
+                case 2:
                 pila.push(infijo.charAt(i));
-                    
-                break;   
+                break;    
+
+                //Caso de que es un paréntesis derecho
+                case 3:                    
+                while(pila.isEmpty()!=true && pila.peek()!='('){
+                    postfijo=postfijo + pila.peek()+" ";
+                    pila.pop();
+                }
+                pila.pop();
+                break;
                 
+                //Caso de que es un operador
+                case 4:
+                    int a = regresarValor(Lista,infijo.charAt(i));
+                    int b=0;
+                    if(pila.isEmpty()!=true){
+                        b = regresarValor(Lista,pila.peek());
+                    }
+                    
+                    while(pila.isEmpty()!=true && b>=a){
+                        postfijo=postfijo + pila.peek()+" ";
+                        pila.pop(); 
+                        if(pila.isEmpty()!=true)
+                            b=regresarValor(Lista,pila.peek());
+                    }
+                    pila.push(infijo.charAt(i));   
+                    break;   
             }     
             i++;
         }
@@ -162,8 +143,6 @@ public class Main {
         }else{
             return null;
         }
-    
-    
 
 
         }
@@ -269,13 +248,13 @@ private static void leerContenido(String archivo) throws FileNotFoundException, 
         cadena =cadena.replace(" ", "");
         boolean x =true;
 
-        if(cadena.contains("++") || cadena.contains("--") || cadena.contains("//") || cadena.contains("***")){
-         x=false;
+        if(cadena.contains("++") || cadena.contains("--") || cadena.contains("//") || cadena.contains("***")){ //Hay algo mal en la sintaxis
+            x=false;
         }else{
-          cadena=cadena.replace("**","^");
+            cadena=cadena.replace("**","^"); //Todo está bien, remplazamos ** por ^
         }
 
-        if(validarParentesis(cadena) && cadena.charAt(cadena.length()-1)==';' && (Character.isDigit(cadena.charAt(0))|| cadena.charAt(0)=='(') && x==true){
+        if(validarParentesis(cadena) && cadena.charAt(cadena.length()-1)==';' && x==true && (Character.isDigit(cadena.charAt(0))|| cadena.charAt(0)=='(')){
             Lista2.add(cadena);
         }
        

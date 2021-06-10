@@ -1,5 +1,5 @@
 public class NodeGenerico <T>{
-    private T data;
+    private String data;
     private NodeGenerico<T> leftChild;
     private NodeGenerico<T> rightChild;
 
@@ -7,10 +7,10 @@ public class NodeGenerico <T>{
         System.out.println( "("+data+")" ); 
     }
 
-    public T getData(){
+    public String getData(){
         return this.data;
     }
-    public void setData(T data){
+    public void setData(String data){
         this.data = data;
     }
 
@@ -32,6 +32,6 @@ public class NodeGenerico <T>{
 
     @Override
     public String toString() {
-        return "" + data;
+        return data;
     }
 }
