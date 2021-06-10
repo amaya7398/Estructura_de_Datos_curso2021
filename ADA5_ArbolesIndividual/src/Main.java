@@ -14,7 +14,7 @@ public class Main {
     static ArrayList<String> Lista2 = new ArrayList<String>();      //LISTA CON CADENAS DE LAS EXPRESIONES, LINEAS CORRECTAS
 
     public static void main(String[] args) throws Exception {
-        TreeGenerico<Integer> a1 = new TreeGenerico<>();
+        TreeGenerico<Integer> tree = new TreeGenerico<>();
 
         String infijo="";
         String postfijo="";
@@ -32,14 +32,15 @@ public class Main {
                 String postfijo2=postfijo.replace("^", "**");
                 salida = "Exp: " + postfijo2 +"; Eval:"+ resultado(postfijo)+"\n";
                 
-                a.expresionesAritmeticas(infijo);  //Creamos arbol binario de expresiones aritmeticas simples, desde una expresión infija
-                String recorridos = a.tresRecorridos();
+                tree.expresionesAritmeticas(infijo);  //Creamos arbol binario de expresiones aritmeticas simples, desde una expresión infija
+                String recorridos = tree.tresRecorridos();
+                salida += recorridos +"\n\n";
             } catch (Exception e) {
                 salida="ERROR\n";
             }
             anadirArchivo(salida);
             
-            BTreePrinter.printNode(a1.getRoot()); //Imprimir arbol Binario
+            BTreePrinter.printNode(tree.getRoot()); //Imprimir arbol Binario
             
         }
         

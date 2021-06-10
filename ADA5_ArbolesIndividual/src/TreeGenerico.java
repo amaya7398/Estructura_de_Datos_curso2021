@@ -1,6 +1,9 @@
+import java.util.ArrayList;
 
 public class TreeGenerico<T> {
     private NodeGenerico<T> root;
+    private ArrayList <NodeGenerico<T>> operandos = new ArrayList<>();
+    private ArrayList <NodeGenerico<T>> operadores = new ArrayList<>();
 
     public TreeGenerico(){
         root = null;
@@ -9,9 +12,16 @@ public class TreeGenerico<T> {
     public NodeGenerico<T> getRoot(){
         return root;
     }
+    private void clear(){ //Reiniciamos para siguiente infija
+        operandos.clear();
+        operadores.clear();
+    }
 
     public void expresionesAritmeticas(String infija){
-        System.out.println("cadena infija");
+        clear();
+        System.out.println("Añadiendo caracteres de cadena infija a las pilas");
+        System.out.println(infija);
+        System.out.println("Creando árbol desde las pilas");
     }
 
     public String tresRecorridos(){
@@ -28,7 +38,7 @@ public class TreeGenerico<T> {
         case 1:
             recorrido = "Preorder traversal: " ;
             recorrido += preOrder(root);
-            return recorrido;
+            return recorrido + "\n";
         /*case 2:
             System.out.print("\nInorder traversal: "); 
             inOrder(root);
