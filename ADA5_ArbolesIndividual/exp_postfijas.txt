@@ -1,14 +1,28 @@
-Exp: 2 3 + ; Eval:5.0
-Exp: 2 3 4 + * ; Eval:14.0
-Exp: 2 4 + 7 * 3 9 5 - * + ; Eval:54.0
-Exp: 2 3 4 * + ; Eval:14.0
-Exp: 2 3 + 4 * ; Eval:20.0
-Exp: 2 2 ** 4 / ; Eval:1.0
-Exp: 2 5 - 3 2 ** + ; Eval:6.0
-Exp: 2 3 + ; Eval:5.0
-Exp: 2 3 4 + * ; Eval:14.0
-Exp: 2 4 + 7 * 3 9 5 - * + ; Eval:54.0
-Exp: 2 3 4 * + ; Eval:14.0
-Exp: 2 3 + 4 * ; Eval:20.0
-Exp: 2 2 ** 4 / ; Eval:1.0
-Exp: 2 5 - 3 2 ** + ; Eval:6.0
+Exp[1]: 2 3 + ; Eval:5.0
+Preorder traversal: + 2 3 
+Inorder traversal: 2 + 3 Postorder traversal: 2 3 + 
+
+Exp[2]: 2 3 4 + * ; Eval:14.0
+Preorder traversal: + * 2 3 4 
+Inorder traversal: 2 * 3 + 4 Postorder traversal: 2 3 * 4 + 
+
+Exp[3]: 2 4 + 7 * 3 9 5 - * + ; Eval:54.0
+Preorder traversal: - * + * + 2 4 7 3 9 5 
+Inorder traversal: 2 + 4 * 7 + 3 * 9 - 5 Postorder traversal: 2 4 + 7 * 3 + 9 * 5 - 
+
+Exp[4]: 2 3 4 * + ; Eval:14.0
+Preorder traversal: * + 2 3 4 
+Inorder traversal: 2 + 3 * 4 Postorder traversal: 2 3 + 4 * 
+
+Exp[5]: 2 3 + 4 * ; Eval:20.0
+Preorder traversal: * + 2 3 4 
+Inorder traversal: 2 + 3 * 4 Postorder traversal: 2 3 + 4 * 
+
+Exp[6]: 2 2 ** 4 / ; Eval:1.0
+Preorder traversal: / ^ 2 2 4 
+Inorder traversal: 2 ^ 2 / 4 Postorder traversal: 2 2 ^ 4 / 
+
+Exp[7]: 2 5 - 3 2 ** + ; Eval:6.0
+Preorder traversal: ^ + - 2 5 3 2 
+Inorder traversal: 2 - 5 + 3 ^ 2 Postorder traversal: 2 5 - 3 + 2 ^ 
+

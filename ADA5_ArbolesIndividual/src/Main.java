@@ -30,7 +30,7 @@ public class Main {
                 infijo = Lista2.get(i);     //Linea i
                 postfijo=aPostfijo(Lista,infijo);
                 String postfijo2=postfijo.replace("^", "**");
-                salida = "Exp: " + postfijo2 +"; Eval:"+ resultado(postfijo)+"\n";
+                salida = "Exp["+(i+1)+"]: " + postfijo2 +"; Eval:"+ resultado(postfijo)+"\n";
                 
                 tree.expresionesAritmeticas(infijo);  //Creamos arbol binario de expresiones aritmeticas simples, desde una expresión infija
                 String recorridos = tree.tresRecorridos();

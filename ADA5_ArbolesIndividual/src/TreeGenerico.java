@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class TreeGenerico<T> {
     private NodeGenerico<T> root;
-    private ArrayList <NodeGenerico<T>> operandos = new ArrayList<>();
+    private ArrayList <NodeGenerico<T>> nums = new ArrayList<>(); //OPERANDOS
     private ArrayList <NodeGenerico<T>> operadores = new ArrayList<>();
 
     public TreeGenerico(){
@@ -13,65 +13,98 @@ public class TreeGenerico<T> {
         return root;
     }
     private void clear(){ //Reiniciamos para siguiente infija
-        operandos.clear();
+        nums.clear();
         operadores.clear();
     }
 
     public void expresionesAritmeticas(String infija){
-        clear();
-        System.out.println("Añadiendo caracteres de cadena infija a las pilas");
+        clear();                    //Clear all the stacks, nums and operadores stack
+        addingToStack(infija);      //Read the infija line and add nums to nums arrayList and operadores a operadores ArrayLsit
         System.out.println(infija);
-        System.out.println("Creando árbol desde las pilas");
+        creatingTree();             //Creamos Árbol/ Create tree for that infija line
     }
 
+    private void addingToStack(String infija){
+        String comodin ="";
+        char[] chars = infija.toCharArray();
+        for (char ch : chars){
+            if(Character.isDigit(ch))
+                nums.add(new NodeGenerico<>(ch+comodin));
+            if( ch=='^' || ch=='/' || ch=='*' || ch=='+' || ch=='-' )
+                operadores.add(new NodeGenerico<>(ch+comodin));
+        }
+    }
+
+    private void creatingTree(){
+        NodeGenerico<T> num1;
+        NodeGenerico<T> num2;
+        NodeGenerico<T> op;
+
+
+        while(!operadores.isEmpty()){
+            num1 = nums.remove (0);
+            num2 = nums.remove (0);
+            op = operadores.remove(0);
+            op.setLeftChild(num1);
+            op.setRightChild(num2);
+            nums.add(0, op);        //op added to the top of the stack of the numeric arraylist
+        }
+        root = nums.get(0); //Root is asigned to the last numeric node, which should be the root
+    }
+
+    //####################################################################################
     public String tresRecorridos(){
-        String recorridos;
-        recorridos = traverse(1);
-        //recorridos = traverse(2);
-        //recorridos = traverse(3);
+        String recorridos = "";
+        recorridos += traverse(1);
+        recorridos += traverse(2);
+        recorridos += traverse(3);
         return recorridos;
     }
 
-    public String traverse(int type) {
+    private String traverse(int type) {
         String recorrido;
         switch(type) {
         case 1:
             recorrido = "Preorder traversal: " ;
             recorrido += preOrder(root);
             return recorrido + "\n";
-        /*case 2:
-            System.out.print("\nInorder traversal: "); 
-            inOrder(root);
-            break;
+        case 2:
+            recorrido = "Inorder traversal: "; 
+            recorrido += inOrder(root);
+            return recorrido + "\n";
         case 3:
-            System.out.print("\nPostorder traversal: "); 
-            postOrder(root);
-            break;*/
+            recorrido = "Postorder traversal: "; 
+            recorrido += postOrder(root);
+            return recorrido + "\n";
         default:
             return "ERROR!";
         }
     }
 
     private String preOrder(NodeGenerico<T> auxRoot) {
-        String recorrido = auxRoot.getData(); 
-        recorrido += " ";
+        String recorrido = auxRoot.getData() + " "; 
         if (auxRoot.getLeftChild() != null)     recorrido += preOrder(auxRoot.getLeftChild());
         if (auxRoot.getRightChild() != null)    recorrido += preOrder(auxRoot.getRightChild());
         return recorrido;
     }
 
-    private void inOrder(NodeGenerico<T> auxRoot) {
-        if (auxRoot.getLeftChild() != null)     inOrder(auxRoot.getLeftChild());
-        System.out.println(auxRoot.getData()); 
-        if (auxRoot.getRightChild() != null)    inOrder(auxRoot.getRightChild());
+    private String inOrder(NodeGenerico<T> auxRoot) {
+        String recorrido = "";
+        if (auxRoot.getLeftChild() != null)     recorrido += inOrder(auxRoot.getLeftChild());
+        recorrido += auxRoot.getData() + " "; 
+        if (auxRoot.getRightChild() != null)    recorrido += inOrder(auxRoot.getRightChild());
+        return recorrido;
     }
 
-    private void postOrder(NodeGenerico<T> auxRoot) {
-        if (auxRoot.getLeftChild() != null)     postOrder(auxRoot.getLeftChild());
-        if (auxRoot.getRightChild() != null)    postOrder(auxRoot.getRightChild());
-        System.out.println(auxRoot.getData());
+    private String postOrder(NodeGenerico<T> auxRoot) {
+        String recorrido = "";
+        if (auxRoot.getLeftChild() != null)     recorrido += postOrder(auxRoot.getLeftChild());
+        if (auxRoot.getRightChild() != null)    recorrido += postOrder(auxRoot.getRightChild());
+        recorrido += auxRoot.getData() + " "; 
+        return recorrido;
     }
 
+//####################################################################################
     public void displayTree(){
         displayNodes(root);
     }

@@ -3,6 +3,12 @@ public class NodeGenerico <T>{
     private NodeGenerico<T> leftChild;
     private NodeGenerico<T> rightChild;
 
+
+    public NodeGenerico(){  }
+    public NodeGenerico(String data){
+        this.data = data;
+    }
+
     public void displayNode(){
         System.out.println( "("+data+")" ); 
     }
