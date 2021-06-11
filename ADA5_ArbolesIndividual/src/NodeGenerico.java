@@ -4,7 +4,9 @@ public class NodeGenerico <T>{
     private NodeGenerico<T> rightChild;
 
 
-    public NodeGenerico(){  }
+    public NodeGenerico(){
+        this.data = "";
+    }
     public NodeGenerico(String data){
         this.data = data;
     }

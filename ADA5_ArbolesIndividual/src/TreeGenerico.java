@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class TreeGenerico<T> {
     private NodeGenerico<T> root;
     private ArrayList <NodeGenerico<T>> nums = new ArrayList<>(); //OPERANDOS
-    private ArrayList <NodeGenerico<T>> operadores = new ArrayList<>();
 
     public TreeGenerico(){
         root = null;
@@ -12,44 +11,38 @@ public class TreeGenerico<T> {
     public NodeGenerico<T> getRoot(){
         return root;
     }
+
+    public void expresionAritmetica(String postfix){
+        clear();                    //Clear all the stacks, nums and operadores stack
+        analyzingPostfix(postfix);      //Read the infija line and add nums to nums arrayList and operadores a operadores ArrayLsit
+    }
+
     private void clear(){ //Reiniciamos para siguiente infija
         nums.clear();
-        operadores.clear();
     }
 
-    public void expresionesAritmeticas(String infija){
-        clear();                    //Clear all the stacks, nums and operadores stack
-        addingToStack(infija);      //Read the infija line and add nums to nums arrayList and operadores a operadores ArrayLsit
-        System.out.println(infija);
-        creatingTree();             //Creamos Árbol/ Create tree for that infija line
-    }
-
-    private void addingToStack(String infija){
-        String comodin ="";
-        char[] chars = infija.toCharArray();
+    private void analyzingPostfix(String postfix){
+        char[] chars = postfix.toCharArray();
         for (char ch : chars){
-            if(Character.isDigit(ch))
-                nums.add(new NodeGenerico<>(ch+comodin));
+            if(Character.isDigit(ch))   //Adding just nums in ArrayList nums
+                nums.add( 0, new NodeGenerico<>(ch+"") ); //NodeGenerico.data <=> String type
             if( ch=='^' || ch=='/' || ch=='*' || ch=='+' || ch=='-' )
-                operadores.add(new NodeGenerico<>(ch+comodin));
+                creatingTree( String.valueOf(ch) );   //Creamos sub Árbol
         }
+        root = nums.get(0);     //Root is asigned to the last numeric node, which should be the root
     }
 
-    private void creatingTree(){
+    //####################################################################################
+    private void creatingTree(String opData){
         NodeGenerico<T> num1;
         NodeGenerico<T> num2;
-        NodeGenerico<T> op;
+        NodeGenerico<T> op = new NodeGenerico<>(opData);
 
-
-        while(!operadores.isEmpty()){
-            num1 = nums.remove (0);
-            num2 = nums.remove (0);
-            op = operadores.remove(0);
-            op.setLeftChild(num1);
-            op.setRightChild(num2);
-            nums.add(0, op);        //op added to the top of the stack of the numeric arraylist
-        }
-        root = nums.get(0); //Root is asigned to the last numeric node, which should be the root
+        num2 = nums.remove (0);
+        num1 = nums.remove (0);
+        op.setLeftChild(num1);
+        op.setRightChild(num2);
+        nums.add(0, op);        //op added to the top of the stack of the numeric arraylist
     }
 
     //####################################################################################

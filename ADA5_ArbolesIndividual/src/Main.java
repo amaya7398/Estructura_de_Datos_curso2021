@@ -31,15 +31,17 @@ public class Main {
                 postfijo=aPostfijo(Lista,infijo);
                 String postfijo2=postfijo.replace("^", "**");
                 salida = "Exp["+(i+1)+"]: " + postfijo2 +"; Eval:"+ resultado(postfijo)+"\n";
-                
-                tree.expresionesAritmeticas(infijo);  //Creamos arbol binario de expresiones aritmeticas simples, desde una expresión infija
-                String recorridos = tree.tresRecorridos();
+
+                tree.expresionAritmetica(postfijo);  //Creamos arbol binario de expresiones aritmeticas simples, a partir de una expresión postfija
+                String recorridos = tree.tresRecorridos(); //guardamos los 3 recorridos del árbol y luego se añadé a Salida
+
                 salida += recorridos +"\n\n";
             } catch (Exception e) {
                 salida="ERROR\n";
             }
             anadirArchivo(salida);
             
+            System.out.println("Expresión aritmética: "+infijo+" Eval: "+resultado(postfijo));
             BTreePrinter.printNode(tree.getRoot()); //Imprimir arbol Binario
             
         }
